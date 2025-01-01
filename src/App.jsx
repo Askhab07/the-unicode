@@ -3,15 +3,18 @@ import './App.css';
 import Header from './layouts/Header';
 import HomePage from './pages/HomePage';
 import CategoriesPage from './pages/CategoriesPage';
+import Post from './pages/Post';
 
 function App() {
+
   return (
-    <div className="font-['Open_Sans']">
+    <div className="w-[1600px] flex flex-col items-center font-['Open_Sans']">
       <Header />
       <Routes>
-        <Route path='/' element={<HomePage/>}/>
-        <Route path='/:id' element={<CategoriesPage/>}/>
-        <Route path='*' element={<Navigate to={'/'} replace/>}/>
+        <Route path="/posts" element={<HomePage />} />
+        <Route path="/categories/:id" element={<CategoriesPage />} />
+        <Route path="/posts/:id" element={<Post />} />
+        <Route path="*" element={<Navigate to={'/'} replace />} />
       </Routes>
     </div>
   );

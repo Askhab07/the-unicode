@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { API_KEY } from '../api/api';
-import { addCategoryAction } from './categoryReducer';
+import { ADD_CATEGORY } from './categoryReducer';
 
 export const fetchCategory = () => {
   return (dispatch) => {
@@ -10,3 +10,5 @@ export const fetchCategory = () => {
     .then((data) => dispatch(addCategoryAction(data)));
   }
 };
+
+export const addCategoryAction = (payload) => ({type: ADD_CATEGORY, payload});

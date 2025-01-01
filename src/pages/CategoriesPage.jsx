@@ -1,8 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 import CategoryPost from '../components/CategoryPost';
 import { useParams } from 'react-router';
-import { fetchPosts } from '../store/postsThunk';
+import { fetchPosts } from '../store/postsAction';
 import { useEffect } from 'react';
+import AsideRecommendation from '../layouts/AsideRecommendation';
+import FooterRecommendation from '../layouts/FooterRecommendation';
 
 const CategoriesPage = () => {
   const { id } = useParams();
@@ -16,16 +18,17 @@ const CategoriesPage = () => {
   }, [dispatch]);
 
   return (
-    <div>
-      <div>
-        <h2 className="font-bold text-6xl">category</h2>
-        <ul>
+    <div className='w-[1535px] flex flex-col items-center pb-14'>
+      <div className='w-[1400px]  flex justify-between'>
+        <div>
+        <h2 className="font-bold text-6xl mb-10">{}</h2>
           {filteredPosts.map((e) => (
             <CategoryPost post={e} className='w-[796px] min-h-[330px]' />
           ))}
-        </ul>
+        </div>
+        <AsideRecommendation posts={posts} />
       </div>
-
+        <FooterRecommendation posts={posts} />
     </div>
   );
 };

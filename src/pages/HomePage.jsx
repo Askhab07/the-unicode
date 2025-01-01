@@ -1,10 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPosts } from '../store/postsThunk';
+import { fetchPosts } from '../store/postsAction';
 import { useEffect, useState } from 'react';
-import Post from '../components/Post';
+import CardPost from '../components/CardPost';
+import useRandom from '../hooks/useRandom';
+import { Link } from 'react-router';
 
 const HomePage = () => {
-  const [readMore, setReadMore] = useState(30);
+  const randomPost = useRandom();
+  const [readMore, setReadMore] = useState({});
   const posts = useSelector((state) => state.posts.posts);
   const dispatch = useDispatch();
   
@@ -12,24 +15,35 @@ const HomePage = () => {
     dispatch(fetchPosts());
   }, [dispatch]);
 
+  const handleReadMore = (id) => {
+    setReadMore((prevState) => ({
+      ...prevState,
+      [id]: !prevState[id],
+    }));
+  };
+
   return (
     <div className="w-[1600px] flex flex-col items-center mb-32">
       <div className="w-[1400px] flex justify-center border-b-2 border-black pb-10">
         <div className="w-[1200px] pt-[37px] flex justify-between">
-          <Post
-            posts={posts[Math.floor(Math.random() * posts.length)]}
-            className="w-[700px] h-[662px] flex flex-col justify-end rounded-2xl pb-12 px-12"
-            slice="40"
-          />
+          <Link to={`/posts/${randomPost?._id}`} >
+            <CardPost
+              posts={randomPost}
+              className="w-[700px] h-[662px] flex flex-col justify-end rounded-2xl"
+              slice="40"
+            />
+          </Link>
           <ul className="flex flex-col justify-between">
             {posts
               .map((e) => (
                 <li key={e._id}>
-                  <Post
-                    className={`w-[484px] h-[323px] flex flex-col justify-end rounded-2xl pb-12 px-12`}
+                  <Link to={`/posts/${e._id}`}>
+                  <CardPost
+                    className={`w-[484px] h-[323px] flex flex-col justify-end rounded-2xl`}
                     posts={e}
                     slice="20"
                   />
+                  </Link>
                 </li>
               ))
               .slice(1, 3)}
@@ -49,9 +63,18 @@ const HomePage = () => {
                   src={e.image}
                   alt=""
                 />
-                <h2 className='my-3 text-xl font-bold'>{e.title}</h2>
-                <p>{`${e.text.slice(0, readMore)} ${readMore > 30 ? '' : '.........'}`}</p>
-                <button className='text-[#3300FF]' onClick={() => setReadMore(readMore <= 30 ? e.text.length : 30)}>{readMore <= 30 ? 'читать далее' : 'свернуть'}</button>
+                <h2 className="my-3 text-xl font-bold">{e.title}</h2>
+                <p>
+                  {`${e.text.slice(0, readMore[e._id] ? e.text.length : 30)} ${
+                    readMore[e._id] ? '' : '...'
+                  }`}
+                </p>
+                <button
+                  className="text-[#3300FF]"
+                  onClick={() => handleReadMore(e._id)}
+                >
+                  {readMore[e._id] ? 'свернуть' : 'читать далее'}
+                </button>
               </li>
             ))
             .slice(0, 2)}

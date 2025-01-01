@@ -2,7 +2,7 @@ const initialState = {
   category: [],
 };
 
-const ADD_CATEGORY = 'ADD_CATEGORY';
+export const ADD_CATEGORY = 'ADD_CATEGORY';
 
 export const categoryReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -13,7 +13,3 @@ export const categoryReducer = (state = initialState, action) => {
   }
 };
 
-export const addCategoryAction = (payload) => ({
-  type: ADD_CATEGORY,
-  payload,
-});
