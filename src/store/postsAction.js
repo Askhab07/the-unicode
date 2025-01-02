@@ -1,13 +1,15 @@
 import axios from 'axios'
-import { ADD_POSTS, ADD_POSTS_CATEGORY, ADD_POSTS_ID } from './postsReducer'
+import { ADD_POSTS, ADD_POSTS_CATEGORY, ADD_POSTS_ID, LOAD_POSTS } from './postsReducer'
 import {API_KEY} from '../api/api';
 
 export const fetchPosts = () => {
     return (dispatch) => {
+        dispatch({ type: LOAD_POSTS }); // Устанавливаем pending = true
         axios
         .get(`${API_KEY}/posts`)
         .then(response => response.data)
         .then(data => dispatch(addPostsAction(data)))
+        .catch(error => dispatch({ type: 'FETCH_ERROR', error })); // Обработка ошибок
     }
 }
 

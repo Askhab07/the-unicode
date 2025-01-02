@@ -9,7 +9,7 @@ import FooterRecommendation from '../layouts/FooterRecommendation';
 const CategoriesPage = () => {
   const { id } = useParams();
   const posts = useSelector((state) => state.posts.posts);
-  const filteredPosts = posts.filter((e) => e.categoryId === id);
+  const categoryPosts = posts.filter((e) => e.categoryId === id);
 
   const dispatch = useDispatch();
   
@@ -22,8 +22,8 @@ const CategoriesPage = () => {
       <div className='w-[1400px]  flex justify-between'>
         <div>
         <h2 className="font-bold text-6xl mb-10">{}</h2>
-          {filteredPosts.map((e) => (
-            <CategoryPost post={e} className='w-[796px] min-h-[330px]' />
+          {categoryPosts.map((post) => (
+            <CategoryPost key={post._id} post={post} className='w-[796px] min-h-[330px]' />
           ))}
         </div>
         <AsideRecommendation posts={posts} />
