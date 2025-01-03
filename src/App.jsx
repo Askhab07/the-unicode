@@ -8,7 +8,7 @@ import PostPage from './pages/PostPage';
 function App() {
 
   return (
-    <div className="w-[1600px] flex flex-col items-center font-['Open_Sans']">
+    <div className="w-[1600px] mx-auto flex flex-col items-center font-['Open_Sans']">
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
