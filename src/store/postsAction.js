@@ -4,12 +4,12 @@ import {API_KEY} from '../api/api';
 
 export const fetchPosts = () => {
     return (dispatch) => {
-        dispatch({ type: LOAD_POSTS }); // Устанавливаем pending = true
+        dispatch({ type: LOAD_POSTS });
         axios
         .get(`${API_KEY}/posts`)
         .then(response => response.data)
         .then(data => dispatch(addPostsAction(data)))
-        .catch(error => dispatch({ type: 'FETCH_ERROR', error })); // Обработка ошибок
+        .catch(error => dispatch({ type: 'FETCH_ERROR', error }));
     }
 }
 

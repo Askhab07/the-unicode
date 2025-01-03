@@ -9,8 +9,11 @@ import FooterRecommendation from '../layouts/FooterRecommendation';
 const CategoriesPage = () => {
   const { id } = useParams();
   const posts = useSelector((state) => state.posts.posts);
-  const categoryPosts = posts.filter((e) => e.categoryId === id);
-
+  const category = useSelector((state) => state.category.category);
+  
+  const categoryPosts = posts.filter((category) => category.categoryId === id);
+  const categoryTitle = category.filter((category) => category._id === id);
+  
   const dispatch = useDispatch();
   
   useEffect(() => {
@@ -20,8 +23,8 @@ const CategoriesPage = () => {
   return (
     <div className='w-[1535px] flex flex-col items-center pb-14'>
       <div className='w-[1400px]  flex justify-between'>
-        <div>
-        <h2 className="font-bold text-6xl mb-10">{}</h2>
+        <div className='flex flex-col items-center'>
+          <h2 className="font-bold text-6xl mt-10">{categoryTitle[0]?.title}</h2>
           {categoryPosts.map((post) => (
             <CategoryPost key={post._id} post={post} className='w-[796px] min-h-[330px]' />
           ))}

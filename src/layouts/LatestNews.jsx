@@ -1,23 +1,25 @@
-// import React, { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useToggleText from '../hooks/useToggleText';
-import { useSelector } from 'react-redux';
-// import { fetchPostsCategory } from '../store/postsAction';
+import axios from 'axios';
+import { API_KEY } from '../api/api';
 
 const LatestNews = () => {
-  const posts = useSelector((state) => state.posts.posts);
-//   const dispatch = useDispatch();
+  const [newsPosts, setNewsPosts] = useState([]);
   const { isExpanded, toggle } = useToggleText();
-
-//   useEffect(() => {
-//       dispatch(fetchPostsCategory('63dfea8be3ff10b4c4e0ae3f'));
-//     }, [dispatch]);
-
+  
+  useEffect(() => {
+    axios
+    .get(`${API_KEY}/posts/category/63dfea8be3ff10b4c4e0ae3f`)
+    .then((response) => response.data)
+    .then((date) => setNewsPosts(date))
+    .catch((error) => console.log(error));
+  }, [])
 
   return (
     <div className="w-[1200px] flex flex-col items-center mt-8">
       <h1 className="text-5xl font-bold mb-12">Последние новости в мире IT</h1>
       <ul className="w-[1180px] flex justify-between">
-        {posts.slice(0, 2).map((post) => (
+        {newsPosts.slice(newsPosts.length - 2, newsPosts.length).map((post) => (
           <li key={post._id} className="w-[550px]">
             <img
               className="w-[550px] h-[367px] rounded-2xl object-cover object-left-top"

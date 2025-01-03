@@ -40,7 +40,7 @@ const HomePage = () => {
             </Link>
           )}
           <ul className="flex flex-col justify-between">
-            {posts.slice(1, 3).map((post) => (
+            {posts.slice(randomIndex - 2, randomIndex).map((post) => (
               <li key={post._id}>
                 <Link to={`/posts/${post._id}`}>
                   <CardPost

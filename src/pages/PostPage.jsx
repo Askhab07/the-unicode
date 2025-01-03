@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { fetchPostsId } from '../store/postsAction';
@@ -6,8 +6,9 @@ import IsLoading from '../components/IsLoading';
 
 const PostPage = () => {
   const { id } = useParams();
-  const posts = useSelector((state) => state.posts.posts);
+  const [currentPost, setCurrentPost] = useState(null);
   const pending = useSelector((state) => state.posts.pending);
+  const posts = useSelector((state) => state.posts.posts);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -16,22 +17,27 @@ const PostPage = () => {
     }
   }, [dispatch, id]);
 
-  if (pending) {
+  useEffect(() => {
+    if (posts.length > 0) {
+      const foundPost = posts.find((post) => post._id === id);
+      setCurrentPost(foundPost || null);
+    }
+  }, [posts, id]);
+  
+  if (pending || !currentPost) {
     return <IsLoading />
   }
-
-  const post = posts[0];
 
   return (
     <div className="w-[1400px] flex flex-col items-center py-16">
       <img
         className="w-[1200px] rounded-2xl object-contain border-2 border-black/30"
-        src={post?.image}
+        src={currentPost?.image}
         alt=""
       />
       <div className="w-[1360px] mt-5">
-        <h2 className="font-bold text-6xl text-center">{post?.title}</h2>
-        <p className="w-[1360px] text-4xl mt-9">{post?.text}</p>
+        <h2 className="font-bold text-6xl text-center">{currentPost?.title}</h2>
+        <p className="w-[1360px] text-4xl mt-9">{currentPost?.text}</p>
       </div>
     </div>
   );

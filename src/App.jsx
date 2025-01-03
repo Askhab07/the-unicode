@@ -21,9 +21,3 @@ function App() {
 }
 
 export default App;
-
-// Еднпоиты для данных:
-// 1. Получение постов по id категории: https://zelim-blog.onrender.com/posts/category/:id
-// 2. Получение постов: https://zelim-blog.onrender.com/posts
-// 3. Получение категорий: https://zelim-blog.onrender.com/categories
-// 4. Получение поста по id: https://zelim-blog.onrender.com/posts/:id

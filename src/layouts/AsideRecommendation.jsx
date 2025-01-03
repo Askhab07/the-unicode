@@ -8,7 +8,7 @@ const AsideRecommendation = ({ posts }) => {
   
 
   return (
-    <div className="w-[495px] flex flex-col items-center mt-5">
+    <div className="w-[495px] flex flex-col items-end mt-5">
       <h2 className="w-330px font-bold text-[40px] mb-8">
         Рекомендуем к прочтению
       </h2>
