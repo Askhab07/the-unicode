@@ -1,12 +1,12 @@
 import axios from 'axios';
-import { API_KEY } from '../api/api';
 import { ADD_CATEGORY, LOAD_CATEGORY } from './categoryReducer';
+import { getCategoryRoute } from '../api/constants';
 
 export const fetchCategory = () => {
   return (dispatch) => {
     dispatch({ type: LOAD_CATEGORY });
     axios
-      .get(`${API_KEY}/categories`)
+      .get(getCategoryRoute())
       .then((response) => response.data)
       .then((data) => dispatch(addCategoryAction(data)));
   };

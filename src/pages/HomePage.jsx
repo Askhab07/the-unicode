@@ -1,26 +1,30 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPosts } from '../store/postsAction';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import CardPost from '../components/CardPost';
 import { Link } from 'react-router';
 import IsLoading from '../components/IsLoading';
 import LatestNews from '../layouts/LatestNews';
 
 const HomePage = () => {
+  const [randomIndex, setRandomIndex] = useState(null);
   const posts = useSelector((state) => state.posts.posts);
   const pending = useSelector((state) => state.posts.pending);
   const dispatch = useDispatch();
 
-  const randomIndex = useMemo(() => {
-    if (posts.length > 0) {
-      return Math.floor(Math.random() * posts.length);
-    }
-    return null;
-  }, [posts]);
-
   useEffect(() => {
     dispatch(fetchPosts());
   }, [dispatch]);
+  
+  useEffect(() => {
+    if (posts.length > 0 && randomIndex === null) {
+      const min = 2;
+      const max = posts.length;
+      const random = Math.floor(Math.random() * (max - min)) + min;
+      setRandomIndex(random);
+    }
+  }, [posts, randomIndex]);
+  
 
   if (pending) {
     return <IsLoading />

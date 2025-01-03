@@ -1,12 +1,12 @@
 import axios from 'axios'
 import { ADD_POSTS, ADD_POSTS_CATEGORY, ADD_POSTS_ID, LOAD_POSTS } from './postsReducer'
-import {API_KEY} from '../api/api';
+import { getPostsCategoryIdRoute, getPostsIdRoute, getPostsRoute } from '../api/constants';
 
 export const fetchPosts = () => {
     return (dispatch) => {
         dispatch({ type: LOAD_POSTS });
         axios
-        .get(`${API_KEY}/posts`)
+        .get(getPostsRoute())
         .then(response => response.data)
         .then(data => dispatch(addPostsAction(data)))
         .catch(error => dispatch({ type: 'FETCH_ERROR', error }));
@@ -16,7 +16,7 @@ export const fetchPosts = () => {
 export const fetchPostsCategory = (id) => {
     return (dispatch) => {
         axios
-        .get(`${API_KEY}/posts/category/${id}`)
+        .get(getPostsCategoryIdRoute(id))
         .then(response => response.data)
         .then(data => dispatch(addPostsCategoryAction(data)))
     }
@@ -25,7 +25,7 @@ export const fetchPostsCategory = (id) => {
 export const fetchPostsId = (id) => {
     return (dispatch) => {
         axios
-        .get(`${API_KEY}/posts/${id}`)
+        .get(getPostsIdRoute(id))
         .then(response => response.data)
         .then(data => dispatch(addPostsIdAction(data)))
     }

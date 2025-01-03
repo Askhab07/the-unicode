@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import useToggleText from '../hooks/useToggleText';
 import axios from 'axios';
-import { API_KEY } from '../api/api';
+import { BASE_URL } from '../api/url';
 
 const LatestNews = () => {
   const [newsPosts, setNewsPosts] = useState([]);
@@ -9,7 +9,7 @@ const LatestNews = () => {
   
   useEffect(() => {
     axios
-    .get(`${API_KEY}/posts/category/63dfea8be3ff10b4c4e0ae3f`)
+    .get(`${BASE_URL}/posts/category/63dfea8be3ff10b4c4e0ae3f`)
     .then((response) => response.data)
     .then((date) => setNewsPosts(date))
     .catch((error) => console.log(error));
